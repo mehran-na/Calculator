@@ -5,7 +5,6 @@ public enum Operator {
     SOUSTRACTION('-', 1),
     DIVISION('/', 2),
     MULTIPLICATION('*', 2);
-    ;
 
     private final char symbole;
     private final int priorite;
