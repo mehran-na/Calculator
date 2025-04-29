@@ -34,4 +34,32 @@ public class InputValidator {
         // Si tous les caractères sont valides
         return true;
     }
+
+    // Méthode pour normaliser les opérateurs consécutifs (+ et -)
+    public static String normalizeOperators(String expression) {
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+
+        while (i < expression.length()) {
+            char c = expression.charAt(i);
+
+            if (c == '+' || c == '-') {
+                int sign = 1;
+                // Traiter les + et - consécutifs
+                while (i < expression.length() && (expression.charAt(i) == '+' || expression.charAt(i) == '-')) {
+                    if (expression.charAt(i) == '-') {
+                        sign *= -1;
+                    }
+                    i++;
+                }
+                result.append(sign == 1 ? '+' : '-');
+            } else {
+                result.append(c);
+                i++;
+            }
+        }
+
+        return result.toString();
+    }
+
 }

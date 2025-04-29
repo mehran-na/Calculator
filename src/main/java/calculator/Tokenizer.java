@@ -26,32 +26,49 @@ public class Tokenizer {
             // Si le caractère est un chiffre ou un point décimal (pour les numéros flottants) :
             if (Character.isDigit(c) || c == '.') {
                 numberBuilder.append(c);
-            } else { //charactere n'est pas chiffre (soit
-                // alors mon token de numero
+            } else if (c == '+' || c == '-') {
+                if (i == 0 || isPreviousCharOperator(expression, i)) {
+                    // Si au début ou après un autre opérateur => signe d’un nombre
+                    numberBuilder.append(c);
+                } else {
+                    if (!numberBuilder.isEmpty()) {
+                        tokens.add(new Token(Token.NUMERO, numberBuilder.toString()));
+                        numberBuilder.setLength(0);
+                    }
+                    tokens.add(new Token(Token.OPERATEUR, String.valueOf(c)));
+                }
+            } else {
                 if (!numberBuilder.isEmpty()) {
                     tokens.add(new Token(Token.NUMERO, numberBuilder.toString()));
                     numberBuilder.setLength(0); // Réinitialisation de numberBuilder pour le prochain nombre
                 }
-
-                    // Si le caractère est un autre opérateur (par exemple *, /)
-                    try {
-                        Operator op = Operator.fromChar(c);
-                        tokens.add(new Token(Token.OPERATEUR, String.valueOf(op.getSymbole())));
-                    } catch (IllegalArgumentException e) {
-                        // Si c'est un caractère invalide (et non un espace), on lance une exception
-                        if (!Character.isWhitespace(c)) {
-                            throw new IllegalArgumentException("Caractère invalide dans l'expression : " + c);
-                        }
-                        // Si c'est un espace, on ne fait rien
+                // Si le caractère est un autre opérateur (par exemple *, /)
+                try {
+                    Operator op = Operator.fromChar(c);
+                    tokens.add(new Token(Token.OPERATEUR, String.valueOf(op.getSymbole())));
+                } catch (IllegalArgumentException e) {
+                    // Si c'est un caractère invalide (et non un espace), on lance une exception
+                    if (!Character.isWhitespace(c)) {
+                        throw new IllegalArgumentException("Caractère invalide: " + c);
                     }
+                    // Si c'est un espace, on ne fait rien
                 }
             }
-
+        }
         // Si un nombre reste dans numberBuilder à la fin de l'expression, on l'ajoute également
         if (!numberBuilder.isEmpty()) {
             tokens.add(new Token(Token.NUMERO, numberBuilder.toString()));
         }
 
         return tokens;
+    }
+
+    private boolean isPreviousCharOperator(String expr, int index) {
+        for (int i = index - 1; i >= 0; i--) {
+            char ch = expr.charAt(i);
+            if (Character.isWhitespace(ch)) continue;
+            return ch == '+' || ch == '-' || ch == '*' || ch == '/';
+        }
+        return true;
     }
 }
