@@ -23,7 +23,7 @@ public class Tokenizer {
             if (Character.isDigit(c) || c == '.') {
                 numberBuilder.append(c); // ajoute à numberBuilder (grand numéro)
             } else {
-                if (numberBuilder.length() > 0) {
+                if (!numberBuilder.isEmpty()) {
                     tokens.add(new Token(Token.NUMERO, numberBuilder.toString()));
                     numberBuilder.setLength(0); // reset numberBuilder
                 }
@@ -31,7 +31,7 @@ public class Tokenizer {
                 // Si character est un op/rateur ou non
                 try {
                     Operator op = Operator.fromChar(c);
-                    tokens.add(new Token(Token.OPÉRATEUR, String.valueOf(op.getSymbole())));
+                    tokens.add(new Token(Token.OPERATEUR, String.valueOf(op.getSymbole())));
                 } catch (IllegalArgumentException e) {
                     if (!Character.isWhitespace(c)) {
                         throw new IllegalArgumentException("Caractère invalide dans l'expression: " + c);
@@ -42,7 +42,7 @@ public class Tokenizer {
         }
 
         // si il y a numero a la fin :
-        if (numberBuilder.length() > 0) {
+        if (!numberBuilder.isEmpty()) {
             tokens.add(new Token(Token.NUMERO, numberBuilder.toString()));
         }
 
