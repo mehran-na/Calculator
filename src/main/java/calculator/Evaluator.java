@@ -22,8 +22,8 @@ public class Evaluator {
         int i = 0;
         while (i < tokens.size()) {
             Token token = tokens.get(i);
-            //operator baasheh
-            // * yaa / baasheh
+            //Que ce soit un opérateur
+            // * ou /
             if (token.getType() == Token.OPERATEUR &&
                     (token.getValue().charAt(0) == op1.getSymbole() || token.getValue().charAt(0) == op2.getSymbole())) {
 
@@ -40,7 +40,7 @@ public class Evaluator {
                 tokens.remove(i);     // remove operator
                 tokens.set(i - 1, new Token(Token.NUMERO, Double.toString(result))); // set left
 
-                i = i - 1; // bargasht be position ghabli
+                i = i - 1; // Revenir à la position précédente
             } else {
                 i++;
             }
