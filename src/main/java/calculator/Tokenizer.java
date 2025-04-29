@@ -7,6 +7,9 @@ public class Tokenizer {
 
     //Constructor :
     public Tokenizer(String expression) {
+        if (!InputValidator.isValidInput(expression)) {
+            throw new IllegalArgumentException("Invalid input expression");
+        }
         this.expression = expression;
     }
 
