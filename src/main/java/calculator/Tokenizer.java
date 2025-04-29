@@ -28,7 +28,7 @@ public class Tokenizer {
                     numberBuilder.setLength(0); // reset numberBuilder
                 }
 
-                // Si character est un op/rateur ou non
+                // Si character est un opérateur ou non
                 try {
                     Operator op = Operator.fromChar(c);
                     tokens.add(new Token(Token.OPERATEUR, String.valueOf(op.getSymbole())));

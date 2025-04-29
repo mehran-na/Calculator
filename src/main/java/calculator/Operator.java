@@ -1,25 +1,19 @@
 package calculator;
 
 public enum Operator {
-    ADDITION('+', 1),
-    SOUSTRACTION('-', 1),
-    DIVISION('/', 2),
-    MULTIPLICATION('*', 2);
+    ADDITION('+'),
+    SOUSTRACTION('-'),
+    DIVISION('/'),
+    MULTIPLICATION('*');
 
     private final char symbole;
-    private final int priorite;
 
-    Operator(char symbole, int priorite) {
+    Operator(char symbole) {
         this.symbole = symbole;
-        this.priorite = priorite;
     }
 
     public char getSymbole() {
         return symbole;
-    }
-
-    public int getPriorite() {
-        return priorite;
     }
 
     //Retourne l'opérateur correspondant au caractère donné.
